@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 
   .container {
     padding-inline-start: 8px;
-    display:flex;
+    display: flex;
   }
 
   .arrow {
@@ -18,5 +18,9 @@ export const Wrapper = styled.div`
     /* left: -10px;
     position: absolute; */
     /* top: 50%; */
+
+    svg:focus {
+      transform: rotate(90deg) !important;
+    }
   }
 `;

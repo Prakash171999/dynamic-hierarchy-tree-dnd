@@ -3,7 +3,7 @@ import React from "react";
 import { Wrapper } from "./styles";
 import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons";
 
-export const Node = ({ testIdPrefix = "", ...props }) => {
+export const Node = ({ ...props }) => {
   const indent = props.depth * 20;
 
   const handleToggle = (e: any) => {
@@ -20,12 +20,7 @@ export const Node = ({ testIdPrefix = "", ...props }) => {
           </div>
         ) : (
           <div className={"arrow"} onClick={handleToggle}>
-            <img
-              src="/assets/icons/bullet-point.png"
-              alt=""
-              width={20}
-              height={20}
-            />
+            <img src="/assets/icons/bullet-point.png" alt="" width={20} height={20}/>
           </div>
         )}
         <div className={"label"}>{props.node.text}</div>

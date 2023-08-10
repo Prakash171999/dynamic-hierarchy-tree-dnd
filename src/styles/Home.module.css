@@ -7,3 +7,21 @@
   min-height: 100vh;
   background-color: #fff;
 }
+
+.app {
+  height: 100%;
+}
+
+.treeRoot {
+  height: 100%;
+  padding: 32px;
+  list-style-type: none;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
+}

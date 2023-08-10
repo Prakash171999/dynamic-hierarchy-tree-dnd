@@ -85,7 +85,8 @@ body {
   overflow-x: hidden;
 }
 
-body {
+ul {
+  list-style-type: none;
 }
 
 a {
