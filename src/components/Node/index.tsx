@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Wrapper } from "./styles";
+import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 export const Node = ({ testIdPrefix = "", ...props }) => {
-  const indent = props.depth * 16;
+  const indent = props.depth * 20;
 
   const handleToggle = (e: any) => {
     e.stopPropagation();
@@ -11,15 +13,22 @@ export const Node = ({ testIdPrefix = "", ...props }) => {
 
   return (
     <Wrapper style={{ paddingInlineStart: indent }}>
-      <div className={"conatiner"}>
-        {props.hasChild && (
+      <div className={"container"}>
+        {props.hasChild ? (
           <div className={"arrow"} onClick={handleToggle}>
-            {">"}
+            <CaretRightOutlined />
+          </div>
+        ) : (
+          <div className={"arrow"} onClick={handleToggle}>
+            <img
+              src="/assets/icons/bullet-point.png"
+              alt=""
+              width={20}
+              height={20}
+            />
           </div>
         )}
-        <div className={"label"}>
-          {props.node.text}
-        </div>
+        <div className={"label"}>{props.node.text}</div>
       </div>
     </Wrapper>
   );

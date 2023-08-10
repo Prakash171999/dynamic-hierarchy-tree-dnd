@@ -4,18 +4,19 @@ export const Wrapper = styled.div`
   align-items: center;
   display: inline-flex;
   height: 32px;
+  display: flex;
+  flex-direction: row;
 
   .container {
     padding-inline-start: 8px;
-    position: relative;
+    display:flex;
   }
 
   .arrow {
     cursor: pointer;
-    display: flex;
-    left: -16px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    /* display: flex; */
+    /* left: -10px;
+    position: absolute; */
+    /* top: 50%; */
   }
 `;
