@@ -12,6 +12,8 @@ import { Node } from "@/components/Node";
 import { useState } from "react";
 import SampleData from "../tree-sample-data.json";
 import { getLastId } from "@/utils/helpers";
+import { Button, Space } from "antd";
+import { Container } from "@/styles/main-page";
 
 export default function Home() {
   const [treeData, setTreeData] = useState<any>(SampleData);
@@ -64,13 +66,14 @@ export default function Home() {
   };
 
   return (
-    <>
+    <Container>
       <Head>
         <title>React-DnD-Treeview</title>
         <meta name="description" content="R&D on react-dnd-treeview" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Button className="add-btn">Add Item +</Button>
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <div className={styles.app}>
           <Tree
@@ -96,6 +99,6 @@ export default function Home() {
           />
         </div>
       </DndProvider>
-    </>
+    </Container>
   );
 }
