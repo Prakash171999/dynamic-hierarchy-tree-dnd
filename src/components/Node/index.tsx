@@ -5,11 +5,12 @@ import {
   CaretRightOutlined,
   CaretDownOutlined,
   DeleteOutlined,
+  CopyOutlined,
 } from "@ant-design/icons";
 
 export const Node = ({ ...props }) => {
   const [hover, setHover] = useState(false);
-  const { onDelete } = props;
+  const { onDelete, onCopy } = props;
   const { id } = props.node;
   const indent = props.depth * 20;
 
@@ -45,7 +46,10 @@ export const Node = ({ ...props }) => {
       {hover && (
         <>
           <div className={"actionButton"}>
-            <DeleteOutlined onClick={() => onDelete(id)} />
+            <DeleteOutlined onClick={() => onDelete(id)} alt="delete" />
+          </div>
+          <div className={"actionButton"}>
+            <CopyOutlined onClick={() => onCopy(id)} alt="copy" />
           </div>
         </>
       )}

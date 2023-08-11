@@ -11,9 +11,10 @@ import {
 import { Node } from "@/components/Node";
 import { useState } from "react";
 import SampleData from "../tree-sample-data.json";
+import { getLastId } from "@/utils/helpers";
 
 export default function Home() {
-  const [treeData, setTreeData] = useState(SampleData);
+  const [treeData, setTreeData] = useState<any>(SampleData);
   const handleDrop = (newTree: any) => setTreeData(newTree);
 
   const handleDelete = (id: any) => {
@@ -26,9 +27,31 @@ export default function Home() {
     /*create a new array newTree that contains only the nodes whose id is NOT in the deleteIds array. 
     This effectively removes the nodes with IDs found in the deleteIds array from the treeData array
     */
-    const newTree = treeData.filter((node) => !deleteIds.includes(node.id));
+    const newTree = treeData.filter(
+      (node: any) => !deleteIds.includes(node.id)
+    );
 
     setTreeData(newTree);
+  };
+
+  const handleCopy = (id: any) => {
+    const lastId = getLastId(treeData);
+    const targetNode = treeData.find((n: any) => n.id === id);
+    const descendants = getDescendants(treeData, id);
+    const partialTree = descendants.map((node) => ({
+      ...node,
+      id: node.id + lastId,
+      parent: node.parent + lastId,
+    }));
+
+    setTreeData([
+      ...treeData,
+      {
+        ...targetNode,
+        id: targetNode.id + lastId,
+      },
+      ...partialTree,
+    ]);
   };
 
   return (
@@ -45,7 +68,12 @@ export default function Home() {
             tree={treeData}
             rootId={0}
             render={(node, options) => (
-              <Node node={node} {...options} onDelete={handleDelete} />
+              <Node
+                node={node}
+                {...options}
+                onDelete={handleDelete}
+                onCopy={handleCopy}
+              />
             )}
             dragPreviewRender={(monitorProps) => (
               <DragPreview monitorProps={monitorProps} />
