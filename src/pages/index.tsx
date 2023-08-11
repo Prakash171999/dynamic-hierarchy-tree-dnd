@@ -36,21 +36,30 @@ export default function Home() {
 
   const handleCopy = (id: any) => {
     const lastId = getLastId(treeData);
+
+    //locating the specific node within the treeData array with id.
     const targetNode = treeData.find((n: any) => n.id === id);
+
+    //This part is likely a function call. It's asking for the descendants of a node with a specific id in the treeData.
     const descendants = getDescendants(treeData, id);
+
+    /*Create a new array of nodes (partialTree) based on the descendants,
+     but with modified IDs and parent references.
+     */
     const partialTree = descendants.map((node) => ({
       ...node,
       id: node.id + lastId,
       parent: node.parent + lastId,
     }));
 
+    //Update the treeData array with the copied nodes.
     setTreeData([
       ...treeData,
       {
-        ...targetNode,
+        ...targetNode, // Add the copied target node with modified ID.
         id: targetNode.id + lastId,
       },
-      ...partialTree,
+      ...partialTree, // Add the copied descendants with modified IDs.
     ]);
   };
 
