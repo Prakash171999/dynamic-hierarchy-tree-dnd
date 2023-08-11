@@ -6,6 +6,7 @@ import {
   MultiBackend,
   Tree,
   getBackendOptions,
+  getDescendants,
 } from "@minoru/react-dnd-treeview";
 import { Node } from "@/components/Node";
 import { useState } from "react";
@@ -14,6 +15,21 @@ import SampleData from "../tree-sample-data.json";
 export default function Home() {
   const [treeData, setTreeData] = useState(SampleData);
   const handleDrop = (newTree: any) => setTreeData(newTree);
+
+  const handleDelete = (id: any) => {
+    //Creating deleteIds array starting with the selected id and extracts the id of each descendant node.
+    const deleteIds = [
+      id,
+      ...getDescendants(treeData, id).map((node) => node.id),
+    ];
+
+    /*create a new array newTree that contains only the nodes whose id is NOT in the deleteIds array. 
+    This effectively removes the nodes with IDs found in the deleteIds array from the treeData array
+    */
+    const newTree = treeData.filter((node) => !deleteIds.includes(node.id));
+
+    setTreeData(newTree);
+  };
 
   return (
     <>
@@ -28,7 +44,9 @@ export default function Home() {
           <Tree
             tree={treeData}
             rootId={0}
-            render={(node, options) => <Node node={node} {...options} />}
+            render={(node, options) => (
+              <Node node={node} {...options} onDelete={handleDelete} />
+            )}
             dragPreviewRender={(monitorProps) => (
               <DragPreview monitorProps={monitorProps} />
             )}

@@ -23,4 +23,12 @@ export const Wrapper = styled.div`
       transform: rotate(90deg) !important;
     }
   }
+
+  .actionButton {
+    padding: 0 4px;
+
+    svg {
+      margin-left: 20px;
+    }
+  }
 `;

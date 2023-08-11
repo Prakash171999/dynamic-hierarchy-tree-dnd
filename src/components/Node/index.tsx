@@ -1,9 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import { Wrapper } from "./styles";
-import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons";
+import {
+  CaretRightOutlined,
+  CaretDownOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 
 export const Node = ({ ...props }) => {
+  const [hover, setHover] = useState(false);
+  const { onDelete } = props;
+  const { id } = props.node;
   const indent = props.depth * 20;
 
   const handleToggle = (e: any) => {
@@ -12,7 +19,11 @@ export const Node = ({ ...props }) => {
   };
 
   return (
-    <Wrapper style={{ paddingInlineStart: indent }}>
+    <Wrapper
+      style={{ paddingInlineStart: indent }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       <div className={"container"}>
         {props.hasChild ? (
           <div className={"arrow"} onClick={handleToggle}>
@@ -22,7 +33,7 @@ export const Node = ({ ...props }) => {
           <div className={"arrow"} onClick={handleToggle}>
             <img
               src="/assets/icons/bullet-point.png"
-              alt=""
+              alt="file-bullet"
               width={20}
               height={20}
             />
@@ -30,6 +41,14 @@ export const Node = ({ ...props }) => {
         )}
         <div className={"label"}>{props.node.text}</div>
       </div>
+
+      {hover && (
+        <>
+          <div className={"actionButton"}>
+            <DeleteOutlined onClick={() => onDelete(id)} />
+          </div>
+        </>
+      )}
     </Wrapper>
   );
 };
