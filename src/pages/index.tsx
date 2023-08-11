@@ -14,10 +14,12 @@ import SampleData from "../tree-sample-data.json";
 import { getLastId } from "@/utils/helpers";
 import { Button, Space } from "antd";
 import { Container } from "@/styles/main-page";
+import { AddItemForm } from "@/components";
 
 export default function Home() {
   const [treeData, setTreeData] = useState<any>(SampleData);
   const handleDrop = (newTree: any) => setTreeData(newTree);
+  const [showItemForm, setShowItemForm] = useState(false);
 
   const handleDelete = (id: any) => {
     //Creating deleteIds array starting with the selected id and extracts the id of each descendant node.
@@ -73,7 +75,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Button className="add-btn">Add Item +</Button>
+      <Button
+        className="add-btn"
+        onClick={() => setShowItemForm(!showItemForm)}
+      >
+        {showItemForm ? "Close Form" : "Add Item +"}
+      </Button>
+      {showItemForm && <AddItemForm />}
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <div className={styles.app}>
           <Tree

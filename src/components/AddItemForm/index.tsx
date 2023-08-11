@@ -1,4 +1,6 @@
+import { Button, Input, Select } from "antd";
 import React, { useState } from "react";
+import { ButtonWrapper, Container } from "./styles";
 
 export const AddItemForm: React.FC = (props) => {
   const [text, setText] = useState("");
@@ -26,5 +28,26 @@ export const AddItemForm: React.FC = (props) => {
   //     setFileType(e.target.value);
   //   };
 
-  return <></>;
+  return (
+    <Container>
+      <Input placeholder="Enter title" style={{ width: 250 }} />
+      <Select
+        defaultValue="lucy"
+        style={{ width: 250 }}
+        //   onChange={handleChange}
+        options={[
+          { value: "root", label: "root" },
+          { value: "item1", label: "item1" },
+          { value: "item2", label: "item2" },
+        ]}
+      />
+
+      <ButtonWrapper>
+        <Button>Reset</Button>
+        <Button type="primary" danger>
+          Submit
+        </Button>
+      </ButtonWrapper>
+    </Container>
+  );
 };
