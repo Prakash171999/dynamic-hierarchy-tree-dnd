@@ -16,11 +16,16 @@ export const Node = ({ ...props }) => {
       <div className={"container"}>
         {props.hasChild ? (
           <div className={"arrow"} onClick={handleToggle}>
-            <CaretRightOutlined />
+            {!props?.isOpen ? <CaretRightOutlined /> : <CaretDownOutlined />}
           </div>
         ) : (
           <div className={"arrow"} onClick={handleToggle}>
-            <img src="/assets/icons/bullet-point.png" alt="" width={20} height={20}/>
+            <img
+              src="/assets/icons/bullet-point.png"
+              alt=""
+              width={20}
+              height={20}
+            />
           </div>
         )}
         <div className={"label"}>{props.node.text}</div>
