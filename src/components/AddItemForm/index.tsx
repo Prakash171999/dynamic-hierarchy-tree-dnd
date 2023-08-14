@@ -20,7 +20,7 @@ export const AddItemForm: React.FC<IProps> = ({ onSubmit, tree }) => {
         value: node.id,
       }));
 
-    setParentOptions(parentRoots);
+    setParentOptions([{ label: "root", value: 0 }, ...parentRoots]);
   }, [tree]);
 
   const handleChangeText = (e: {
