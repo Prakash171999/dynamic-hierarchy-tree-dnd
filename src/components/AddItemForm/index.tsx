@@ -1,12 +1,27 @@
 import { Button, Input, Select } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonWrapper, Container } from "./styles";
 
-export const AddItemForm: React.FC = (props) => {
+interface IProps {
+  onSubmit: (node: object) => void;
+  tree: any;
+}
+
+export const AddItemForm: React.FC<IProps> = ({ onSubmit, tree }) => {
   const [text, setText] = useState("");
-  const [fileType, setFileType] = useState("text");
   const [parent, setParent] = useState(0);
-  const [droppable, setDroppable] = useState(false);
+  const [parentOptions, setParentOptions] = useState([] as any);
+
+  useEffect(() => {
+    const parentRoots = tree
+      .filter((node: any) => node.droppable === true)
+      .map((node: any) => ({
+        label: node.text,
+        value: node.id,
+      }));
+
+    setParentOptions(parentRoots);
+  }, [tree]);
 
   const handleChangeText = (e: {
     target: { value: React.SetStateAction<string> };
@@ -14,37 +29,35 @@ export const AddItemForm: React.FC = (props) => {
     setText(e.target.value);
   };
 
-  const handleChangeParent = (e: { target: { value: any } }) => {
-    setParent(Number(e.target.value));
+  const handleChangeParent = (value: any) => {
+    setParent(Number(value));
   };
-
-  const handleChangeDroppable = (e: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => {
-    setDroppable(e.target.checked);
-  };
-
-  //   const handleChangeFileType = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-  //     setFileType(e.target.value);
-  //   };
 
   return (
     <Container>
-      <Input placeholder="Enter title" style={{ width: 250 }} />
-      <Select
-        defaultValue="lucy"
+      <Input
+        placeholder="Enter title"
         style={{ width: 250 }}
-        //   onChange={handleChange}
-        options={[
-          { value: "root", label: "root" },
-          { value: "item1", label: "item1" },
-          { value: "item2", label: "item2" },
-        ]}
+        onChange={handleChangeText}
+      />
+      <Select
+        style={{ width: 250 }}
+        onChange={handleChangeParent}
+        options={parentOptions}
       />
 
       <ButtonWrapper>
         <Button>Reset</Button>
-        <Button type="primary" danger>
+        <Button
+          type="primary"
+          danger
+          onClick={() =>
+            onSubmit({
+              text,
+              parent,
+            })
+          }
+        >
           Submit
         </Button>
       </ButtonWrapper>

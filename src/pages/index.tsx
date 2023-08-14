@@ -67,6 +67,18 @@ export default function Home() {
     ]);
   };
 
+  const handleSubmit = (newNode: any) => {
+    const lastId = getLastId(treeData) + 1;
+
+    setTreeData([
+      ...treeData,
+      {
+        ...newNode,
+        id: lastId,
+      },
+    ]);
+  };
+
   return (
     <Container>
       <Head>
@@ -81,7 +93,7 @@ export default function Home() {
       >
         {showItemForm ? "Close Form" : "Add Item +"}
       </Button>
-      {showItemForm && <AddItemForm />}
+      {showItemForm && <AddItemForm tree={treeData} onSubmit={handleSubmit} />}
       <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <div className={styles.app}>
           <Tree

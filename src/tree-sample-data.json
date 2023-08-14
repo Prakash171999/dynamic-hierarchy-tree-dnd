@@ -28,29 +28,5 @@
     "parent": 0,
     "droppable": true,
     "text": "Item 5"
-  },
-  {
-    "id": 6,
-    "parent": 0,
-    "droppable": true,
-    "text": "Item 6"
-  },
-  {
-    "id": 7,
-    "parent": 0,
-    "droppable": true,
-    "text": "Item 7"
-  },
-  {
-    "id": 8,
-    "parent": 0,
-    "droppable": true,
-    "text": "Item 8"
-  },
-  {
-    "id": 9,
-    "parent": 0,
-    "droppable": true,
-    "text": "Item 9"
   }
 ]
