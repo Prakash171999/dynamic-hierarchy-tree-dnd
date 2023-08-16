@@ -1,4 +1,4 @@
-import { Button, Input, Select } from "antd";
+import { Button, Input, Select, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { ButtonWrapper, Container } from "./styles";
 
@@ -29,6 +29,10 @@ export const AddItemForm: React.FC<IProps> = ({ onSubmit, tree }) => {
     setText(e.target.value);
   };
 
+  const handleReset = () => {
+    setText("");
+  };
+
   const handleChangeParent = (value: any) => {
     setParent(Number(value));
   };
@@ -39,23 +43,30 @@ export const AddItemForm: React.FC<IProps> = ({ onSubmit, tree }) => {
         placeholder="Enter title"
         style={{ width: 250 }}
         onChange={handleChangeText}
+        value={text}
       />
       <Select
         style={{ width: 250 }}
         onChange={handleChangeParent}
         options={parentOptions}
+        defaultValue={"root"}
       />
 
       <ButtonWrapper>
-        <Button>Reset</Button>
+        <Button onClick={handleReset}>Reset</Button>
         <Button
           type="primary"
           danger
           onClick={() =>
-            onSubmit({
-              text,
-              parent,
-            })
+            text != ""
+              ? onSubmit({
+                  text,
+                  parent,
+                })
+              : notification.open({
+                  message: "Error",
+                  description: "Please enter a title.",
+                })
           }
         >
           Submit

@@ -79,6 +79,21 @@ export default function Home() {
     ]);
   };
 
+  const handleTextChange = (id: any, value: any) => {
+    const newTree = treeData.map((node: any) => {
+      if (node.id === id) {
+        return {
+          ...node,
+          text: value,
+        };
+      }
+
+      return node;
+    });
+
+    setTreeData(newTree);
+  };
+
   return (
     <Container>
       <Head>
@@ -99,12 +114,15 @@ export default function Home() {
           <Tree
             tree={treeData}
             rootId={0}
-            render={(node, options) => (
+            render={(node, { onToggle, isOpen, depth }) => (
               <Node
                 node={node}
-                {...options}
                 onDelete={handleDelete}
                 onCopy={handleCopy}
+                onToggle={onToggle}
+                isOpen={isOpen}
+                depth={depth}
+                onTextChange={handleTextChange}
               />
             )}
             dragPreviewRender={(monitorProps) => (
@@ -116,6 +134,7 @@ export default function Home() {
               draggingSource: styles.draggingSource,
               dropTarget: styles.dropTarget,
             }}
+            sort={false}
           />
         </div>
       </DndProvider>

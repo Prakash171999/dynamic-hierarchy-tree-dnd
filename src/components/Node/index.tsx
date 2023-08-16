@@ -1,22 +1,46 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { Wrapper } from "./styles";
+import { Container, Wrapper } from "./styles";
 import {
   CaretRightOutlined,
   CaretDownOutlined,
   DeleteOutlined,
   CopyOutlined,
+  EditOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
+import { Input } from "antd";
 
 export const Node = ({ ...props }) => {
   const [hover, setHover] = useState(false);
   const { onDelete, onCopy } = props;
-  const { id } = props.node;
+  const { id, text, isOpen, onToggle, on } = props.node;
   const indent = props.depth * 20;
+  const [visibleInput, setVisibleInput] = useState(false);
+  const [labelText, setLabelText] = useState(text);
 
-  const handleToggle = (e: any) => {
+  const handleToggle = (e) => {
     e.stopPropagation();
     props.onToggle(props.node.id);
+  };
+
+  const handleShowInput = () => {
+    setVisibleInput(true);
+  };
+
+  const handleCancel = () => {
+    setLabelText(text);
+    setVisibleInput(false);
+  };
+
+  const handleChangeText = (e) => {
+    setLabelText(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    setVisibleInput(false);
+    props.onTextChange(id, labelText);
   };
 
   return (
@@ -40,11 +64,31 @@ export const Node = ({ ...props }) => {
             />
           </div>
         )}
-        <div className={"label"}>{props.node.text}</div>
+
+        {visibleInput ? (
+          <Container>
+            <Input
+              placeholder="Enter title"
+              style={{ width: 250 }}
+              onChange={handleChangeText}
+              value={labelText}
+            />
+            <div className="confirm-icons">
+              <CheckOutlined onClick={handleSubmit
+              } />
+              <CloseOutlined onClick={handleCancel} />
+            </div>
+          </Container>
+        ) : (
+          <div className={"label"}>{props.node.text}</div>
+        )}
       </div>
 
-      {hover && (
+      {hover && !visibleInput && (
         <>
+          <div className={"actionButton"}>
+            <EditOutlined onClick={() => handleShowInput()} alt="edit" />
+          </div>
           <div className={"actionButton"}>
             <DeleteOutlined onClick={() => onDelete(id)} alt="delete" />
           </div>

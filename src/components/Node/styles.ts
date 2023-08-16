@@ -32,3 +32,17 @@ export const Wrapper = styled.div`
     }
   }
 `;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .confirm-icons {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    cursor: pointer;
+  }
+`;
