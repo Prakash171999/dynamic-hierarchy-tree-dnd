@@ -20,7 +20,7 @@ export const Node = ({ ...props }) => {
   const [visibleInput, setVisibleInput] = useState(false);
   const [labelText, setLabelText] = useState(text);
 
-  const handleToggle = (e) => {
+  const handleToggle = (e: any) => {
     e.stopPropagation();
     props.onToggle(props.node.id);
   };
@@ -34,7 +34,7 @@ export const Node = ({ ...props }) => {
     setVisibleInput(false);
   };
 
-  const handleChangeText = (e) => {
+  const handleChangeText = (e: any) => {
     setLabelText(e.target.value);
   };
 
@@ -74,8 +74,7 @@ export const Node = ({ ...props }) => {
               value={labelText}
             />
             <div className="confirm-icons">
-              <CheckOutlined onClick={handleSubmit
-              } />
+              <CheckOutlined onClick={handleSubmit} />
               <CloseOutlined onClick={handleCancel} />
             </div>
           </Container>
