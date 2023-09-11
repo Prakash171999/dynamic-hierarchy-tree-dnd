@@ -1,20 +1,20 @@
-import Head from "next/head";
-import styles from "@/styles/Home.module.css";
+import { AddItemForm } from "@/components";
 import { DragPreview } from "@/components/DragPreview";
-import { DndProvider } from "react-dnd";
+import { Node } from "@/components/Node";
+import styles from "@/styles/Home.module.css";
+import { Container } from "@/styles/main-page";
+import { getLastId } from "@/utils/helpers";
 import {
   MultiBackend,
   Tree,
   getBackendOptions,
   getDescendants,
 } from "@minoru/react-dnd-treeview";
-import { Node } from "@/components/Node";
+import { Button } from "antd";
+import Head from "next/head";
 import { useState } from "react";
+import { DndProvider } from "react-dnd";
 import SampleData from "../tree-sample-data.json";
-import { getLastId } from "@/utils/helpers";
-import { Button, Space } from "antd";
-import { Container } from "@/styles/main-page";
-import { AddItemForm } from "@/components";
 
 export default function Home() {
   const [treeData, setTreeData] = useState<any>(SampleData);
@@ -114,7 +114,7 @@ export default function Home() {
           <Tree
             tree={treeData}
             rootId={0}
-            render={(node, { onToggle, isOpen, depth }) => (
+            render={(node, { onToggle, isOpen, depth, hasChild }) => (
               <Node
                 node={node}
                 onDelete={handleDelete}
@@ -123,6 +123,7 @@ export default function Home() {
                 isOpen={isOpen}
                 depth={depth}
                 onTextChange={handleTextChange}
+                hasChild={hasChild}
               />
             )}
             dragPreviewRender={(monitorProps) => (
